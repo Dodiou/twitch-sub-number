@@ -2,6 +2,7 @@ const fs = require("fs");
 const _ = require("lodash");
 const tmi = require("tmi.js");
 const yargs = require("yargs");
+require("console-stamp")(console);
 
 const argv = yargs
     .option("start", {
