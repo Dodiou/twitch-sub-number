@@ -27,15 +27,19 @@ const argv = yargs
     .argv
 
 
-const writeFile = _.throttle((filename, contents) => {
-    try {
-        console.log("Writing to file:", contents);
-        fs.writeFileSync(filename, contents);
-    }
-    catch (err) {
-        console.error(err);
-    }
-});
+const writeFile = _.throttle(
+    (filename, contents) => {
+        try {
+            console.log("Writing to file:", contents);
+            fs.writeFileSync(filename, contents);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    },
+    100,
+    { leading: false, trailing: true }
+);
 
 
 let subNumber = argv.start || 0;
@@ -85,7 +89,17 @@ client.connect().catch(console.error);
 // Do not count the following events:
 //   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
 //   - anonsubmysterygift, submysterygift;   these are the "gifted # subs" messages. these are followed by the # of individual anonsubgift/subgift events
+const logGiftContinuation = (_channel, user) => console.log("Gift sub continuation for %s.   Not updating total.", user);
+client.on("anongiftpaidupgrade", logGiftContinuation);
+client.on("giftpaidupgrade", logGiftContinuation);
+client.on("primepaidupgrade", logGiftContinuation);
 
+const logMysteryGifts = (user, numOfSubs) => console.log("%s gifted %d subs. Total will be updated per each sub event.", user, numOfSubs);
+client.on("anonsubmysterygift", (_channel, numOfSubs) => logMysteryGifts("Anon", numOfSubs));
+client.on("submysterygift", (_channel, user, numOfSubs) => logMysteryGifts(user, numOfSubs));
+
+
+// These sub events count.
 client.on("resub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
 client.on("sub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
 client.on("subgift", (_channel, _gifter, _months, recip, _methods, state) => addStateToNumber(state, recip));
