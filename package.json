@@ -1,0 +1,28 @@
+{
+  "name": "twitch-sub-number",
+  "version": "0.1.0",
+  "description": "Twitch sub number to file",
+  "main": "./main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dodiou/twitch-sub-number.git"
+  },
+  "author": "Dodiou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dodiou/twitch-sub-number/issues"
+  },
+  "homepage": "https://github.com/Dodiou/twitch-sub-number#readme",
+  "devDependencies": {
+    "@types/node": "^18.7.14",
+    "@types/tmi.js": "^1.8.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "tmi.js": "^1.8.5",
+    "yargs": "^17.5.1"
+  }
+}
