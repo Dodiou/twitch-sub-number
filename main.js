@@ -82,12 +82,16 @@ const client = new tmi.Client({
 
 client.connect().catch(console.error);
 
+// Do not count the following events:
+//   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
+//   - anonsubmysterygift, submysterygift;   these are the "gifted # subs" messages. these are followed by the # of individual anonsubgift/subgift events
+
 client.on("resub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
 client.on("sub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
 client.on("subgift", (_channel, _gifter, _months, recip, _methods, state) => addStateToNumber(state, recip));
 client.on("anonsubgift", (_channel, _months, recip, _methods, state) => addStateToNumber(state, recip));
 // client.on("disconnected", () => {
-//     // TODO?
+//     TODO is reconnect needed?
 // });
 
 console.log('Connecting to channel "%s". Writing to file "%s". Starting number at "%d". Waiting for subs...', argv.channel, argv.file, subNumber);
