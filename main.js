@@ -85,8 +85,8 @@ client.on("resub", (_channel, user, _months, _message, state) => addStateToNumbe
 client.on("sub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
 client.on("subgift", (_channel, _gifter, _months, recip, _methods, state) => addStateToNumber(state, recip));
 client.on("anonsubgift", (_channel, _months, recip, _methods, state) => addStateToNumber(state, recip));
-client.on("disconnected", () => {
-    // TODO?
-});
+// client.on("disconnected", () => {
+//     // TODO?
+// });
 
 console.log('Connecting to channel "%s". Writing to file "%s". Starting number at "%d". Waiting for subs...', argv.channel, argv.file, subNumber);
