@@ -8,6 +8,9 @@ This will also install "npm".
 Once installed, open up a terminal (open the folder in windows explorer,
 and just type "cmd" in the file path bar and hit enter).
 
+Use `npm install` to install project dependencies (only needs to be run
+once).
+
 Use `"node .\main.js -s <starting-number>"` to run the program. By default,
 the program will connect to the channel `"DumbDog"` and will write the sub number to `"./sub-number.txt"`.
 
