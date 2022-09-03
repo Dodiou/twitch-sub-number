@@ -50,7 +50,7 @@ else if (argv.start === undefined && fileExists) {
     subNumber = parseInt(numFromFile) || 0;
 }
 
-const addStateToNumber = async (state) => {
+const addStateToNumber = async (state, user="UNKNOWN") => {
     let tierMultiplier = 1;
     let tierString = "tier 1";
     if (state) {
@@ -70,7 +70,7 @@ const addStateToNumber = async (state) => {
     }
 
     subNumber += tierMultiplier;
-    console.log("New %s sub.   Total: %d", tierString, subNumber);
+    console.log("New %s sub for %s.   Total: %d", tierString, user, subNumber);
 
     writeFile(argv.file, "" + subNumber);
 };
@@ -81,10 +81,10 @@ const client = new tmi.Client({
 
 client.connect().catch(console.error);
 
-client.on("resub", (_channel, _user, _months, _message, state) => addStateToNumber(state));
-client.on("sub", (_channel, _user, _months, _message, state) => addStateToNumber(state));
-client.on("subgift", (_channel, _gifter, _months, _recip, _methods, state) => addStateToNumber(state));
-client.on("anonsubgift", (_channel, _months, _message, _methods, state) => addStateToNumber(state));
+client.on("resub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
+client.on("sub", (_channel, user, _months, _message, state) => addStateToNumber(state, user));
+client.on("subgift", (_channel, _gifter, _months, recip, _methods, state) => addStateToNumber(state, recip));
+client.on("anonsubgift", (_channel, _months, recip, _methods, state) => addStateToNumber(state, recip));
 client.on("disconnected", () => {
     // TODO?
 });
