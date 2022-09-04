@@ -1,58 +1,23 @@
 const fs = require("fs");
 const _ = require("lodash");
 const tmi = require("tmi.js");
-const yargs = require("yargs");
-require("console-stamp")(console);
-
-const argv = yargs
-    .option("start", {
-        alias: "s",
-        description: "The number of subs to start the count at. If not provided, will attempt to read the previous number from the given --file.",
-        type: "number"
-    })
-    .option("file", {
-        alias: "f",
-        description: "File to output sub number to. Default is './sub-number.txt'",
-        type: "string",
-        default: "./sub-number.txt"
-    })
-    .option("channel", {
-        alias: "c",
-        description: "The Twitch channel to watch messages for. Case-insensitive. Default is DumbDog.",
-        type: "string",
-        default: "DumbDog"
-    })
-    .help()
-    .alias("help", "h")
-    .argv
+const { readNumFromFile, writeToFile } = require("./fs-util");
 
 
-const writeFile = _.throttle(
-    (filename, contents) => {
-        try {
-            console.log("Writing to file:", contents);
-            fs.writeFileSync(filename, contents);
-        }
-        catch (err) {
-            console.error(err);
-        }
-    },
-    100,
-    { leading: false, trailing: true }
-);
-
+// -----------------------------------------
+// IGNORE THIS FILE FOR NOW. Rewriting.
+// -----------------------------------------
 
 let subNumber = argv.start || 0;
 const fileExists = fs.existsSync(argv.file);
 if (argv.start !== undefined || !fileExists) {
     console.log("Writing starting number to file.");
-    writeFile(argv.file, "" + subNumber);
+    writeToFile(argv.file, "" + subNumber);
 }
 else if (argv.start === undefined && fileExists) {
     // read from file if no start value and file exists
     console.log("Reading starting number from file.");
-    const numFromFile = fs.readFileSync(argv.file);
-    subNumber = parseInt(numFromFile) || 0;
+    const numFromFile = readNumFromFile(argv.file);
 }
 
 const addStateToNumber = async (state, user="UNKNOWN") => {
@@ -77,7 +42,7 @@ const addStateToNumber = async (state, user="UNKNOWN") => {
     subNumber += tierMultiplier;
     console.log("New %s sub for %s.   Total: %d", tierString, user, subNumber);
 
-    writeFile(argv.file, "" + subNumber);
+    writeToFile(argv.file, "" + subNumber);
 };
 
 const client = new tmi.Client({
