@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NumberSetter from "./components/NumberSetter/NumberSetter";
+import Number from "./components/Number/Number";
 import FilePicker from "./components/FilePicker/FilePicker";
 import { SubCounter } from "./services/sub-counter";
 
@@ -15,7 +16,7 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="App">
       Settings:
       <FilePicker
         filepathChange={(newFilepath) => setFilepath(newFilepath)}
@@ -23,13 +24,10 @@ const App = () => {
         loadNumberChange={setLoadNumber}
       />
       <NumberSetter
-        numberChange={setSubNumber}
+        value={subNumber}
+        valueChange={setSubNumber}
       />
-
-      <div className="Number">
-        <div>Current number:</div>
-        <div>{subNumber}</div>
-      </div>
+      <Number value={subNumber} />
     </div>
   )
 };

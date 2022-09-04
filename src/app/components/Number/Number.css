@@ -1,0 +1,25 @@
+.Number {
+  margin: auto;
+  padding: 0.5rem;
+  width: 90%;
+  max-width: 30rem;
+
+  border-radius: 1rem;
+  background-color: #CCC;
+}
+
+.Number__label {
+  margin: auto;
+  text-align: center;
+
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.Number__value {
+  margin: auto;
+  text-align: center;
+
+  font-size: 3rem;
+  font-weight: bold;
+}
