@@ -1,19 +1,15 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 
 export interface ConsoleProps {
-  maxLines
   loadNumber?: boolean;
   loadNumberChange: (newLoadNumber: boolean) => void;
   filepathChange: (newFilepath: string) => void;
 }
 
-const Console = (props: FilePickerProps) => {
-
-  const lines = 
-
+const Console = (props: ConsoleProps) => {
   return (
     <div className="Console">
-      <div></div>
+      <div>{props.loadNumber && "Load"}</div>
     </div>
   )
 };

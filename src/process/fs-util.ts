@@ -1,13 +1,13 @@
-const fs = require("fs");
-const _ = require("lodash");
-const { bufferThrottle } = require("./mixins");
+import fs from "fs";
+import { throttle } from "lodash-es";
+import { bufferThrottle } from "./mixins";
 
 
 const THROTTLE_TIME = 100;
 const THROTTLE_OPTIONS = { leading: false, trailing: true };
 
 
-const _writeToFile = (filename, contents) => {
+const _writeToFile = (filename: string, contents: string) => {
     try {
         console.log("Writing to file:", contents);
         fs.writeFileSync(filename, contents);
@@ -17,7 +17,7 @@ const _writeToFile = (filename, contents) => {
     }
 };
 
-const _appendToFile = (filename, contents) => {
+const _appendToFile = (filename: string, contents: string) => {
     try {
         console.log("Writing to file:", contents);
         fs.writeFileSync(filename, contents, { flag: "a+" });
@@ -33,14 +33,14 @@ const logToFile = bufferThrottle(
     THROTTLE_OPTIONS
 )
 
-const writeToFile = _.throttle(
+const writeToFile = throttle(
     _writeToFile,
     THROTTLE_TIME,
     THROTTLE_OPTIONS
 );
 
-const readNumFromFile = (filename) => {
-    const numFromFile = fs.readFileSync(filename);
+const readNumFromFile = (filename: string) => {
+    const numFromFile = fs.readFileSync(filename).toString();
     return parseInt(numFromFile) || 0;
 };
 
