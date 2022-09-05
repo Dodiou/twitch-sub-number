@@ -6,7 +6,7 @@
   --color-medium-bd: rgb(59, 77, 96);
   --color-medium-bg: rgb(39, 54, 69);
   --color-medium-fg: rgb(191, 214, 242);
-  --color-light-fg-strong: rgb(191, 214, 242);
+  --color-medium-fg-strong: rgb(191, 214, 242);
   
   --color-dark-bd: rgb(59, 77, 96);
   --color-dark-bg: rgb(33, 37, 41);
@@ -72,6 +72,16 @@
   --font-size-small: calc(-1 * var(--font-size-step) + var(--font-size-base));
   --font-size-x-small: calc(-2 * var(--font-size-step) + var(--font-size-base));
 
+  --line-height-step: 0.25rem;
+  --line-height-medium: calc(var(--font-size-medium) + var(--line-height-step));
+  --line-height-large: calc(var(--font-size-large) + var(--line-height-step));
+  --line-height-x-large: calc(var(--font-size-x-large) + var(--line-height-step));
+  --line-height-xx-large: calc(var(--font-size-xx-large) + var(--line-height-step));
+  --line-height-xxx-large: calc(var(--font-size-xxx-large) + var(--line-height-step));
+  --line-height-small: calc(var(--font-size-medium) + var(--line-height-step));
+  --line-height-x-small: calc(var(--font-size-medium) + var(--line-height-step));
+
   --font-weight-normal: 500;
-  --font-weight-strong: 700;
+  --font-weight-bold: 700;
+  --font-weight-strong: 900;
 }

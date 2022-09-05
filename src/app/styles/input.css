@@ -1,5 +1,7 @@
-.Input {
+.Input:not([type="checkbox"],[type="radio"]) {
   width: 100%;
+  padding: 0.25rem;
+  font-size: var(--font-size-medium);
 
   background-color: var(--input-bg);
   border: 1px solid var(--input-bd);
@@ -12,4 +14,8 @@
 
 .Input.Input__large {
   max-width: 10rem;
+}
+
+.Input[type="checkbox"] {
+  margin-inline-end: 0.5rem;
 }

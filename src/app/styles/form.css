@@ -1,0 +1,29 @@
+.Form {
+  max-width: 20rem;
+  padding: 0.5rem;
+
+  background-color: var(--color-medium-bg);
+  border: 1px solid var(--color-medium-bd);
+  color: var(--color-medium-fg);
+}
+
+.Form .Form__label {
+  margin-bottom: 0.25rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-medium-fg-strong);
+}
+
+.Form label,
+.Form .Form__group {
+  display: block;
+}
+
+.Form .Form__group {
+  padding: 0.5rem;
+}
+
+.Form .Form__group > .Form__label {
+  margin-inline-start: -0.5rem;
+  margin-top: -0.5rem;
+}
+

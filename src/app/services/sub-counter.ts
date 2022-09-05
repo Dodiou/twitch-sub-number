@@ -1,4 +1,4 @@
-import { AnonSubGiftUserstate, Client, SubGiftUserstate, SubUserstate } from "tmi.js";
+import { Client, CommonSubUserstate, SubUserstate } from "tmi.js";
 
 export interface SubCounterOpts {
   channel: string;
@@ -12,7 +12,6 @@ interface HandlerMap {
   [key: string]: HandlerFunc;
 }
 
-const logGiftContinuation = (_channel: string, user: string) => console.log("Gift sub continuation for %s.   Not updating total.", user);
 const logMysteryGifts = (user: string, numOfSubs: number) => console.log("%s gifted %d subs. Total will be updated per each sub event.", user, numOfSubs);
 
 const MAX_QUEUE_LENGTH = 5;
@@ -25,6 +24,7 @@ export class SubCounter {
   private connected = false;
   private _subNumber: number;
   private _channel: string | undefined;
+  private _countUpgrades = false;
   private primeSubQueue: string[] = [];
 
   constructor({ channel, subNumber = 0 }: SubCounterOpts = { channel: "DumbDog" }) {
@@ -44,9 +44,9 @@ export class SubCounter {
     // Do not count the following events:
     //   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
     //   - anonsubmysterygift, submysterygift;   these are the "gifted # subs" messages. these are followed by the # of individual anonsubgift/subgift events
-    this.client.on("anongiftpaidupgrade", logGiftContinuation);
-    this.client.on("giftpaidupgrade", logGiftContinuation);
-    this.client.on("primepaidupgrade", logGiftContinuation);
+    this.client.on("anongiftpaidupgrade", (_channel, user, state) => this.onSubUpgrade(state, "Gift", user));
+    this.client.on("giftpaidupgrade", (_channel, user, _sender, state) => this.onSubUpgrade(state, "Gift", user));
+    this.client.on("primepaidupgrade", (_channel, user, _methods, state) => this.onSubUpgrade(state, "Prime", user));
 
     this.client.on("anonsubmysterygift", (_channel, numOfSubs) => logMysteryGifts("Anon", numOfSubs));
     this.client.on("submysterygift", (_channel, user, numOfSubs) => logMysteryGifts(user, numOfSubs));
@@ -96,6 +96,16 @@ export class SubCounter {
     return this._subNumber;
   }
 
+  public setCountUpgrades(countUpgrades: boolean): void {
+    const logMessage = countUpgrades ? "Counting sub upgrades." : "No longer counting sub upgrades."
+    this._countUpgrades = countUpgrades;
+    console.log(logMessage);
+  }
+  
+  public getCountUpgrades(): boolean {
+    return this._countUpgrades;
+  }
+
   public onChange(handler: HandlerFunc): OffChangeFunc {
     const handlerId = "" + this.nextHandlerId;
     this.nextHandlerId++;
@@ -107,6 +117,15 @@ export class SubCounter {
     this.handlers[handlerId] = handler;
 
     return removeHandler;
+  }
+
+  private onSubUpgrade(state: CommonSubUserstate, type: "Prime" | "Gift", user: string): void {
+    if (this._countUpgrades) {
+      this.addStateToNumber(state, user);
+    }
+    else {
+      console.log("%s sub upgrade for %s.   Not updating total.", type, user);
+    }
   }
 
   private emitNumber(value: number): void {
@@ -122,6 +141,7 @@ export class SubCounter {
    */
   private getPrimeMultiplierFor(user: string): number {
     if (this.primeSubQueue.includes(user)) {
+      console.log("Duplicate prime sub for %s detected.", user);
       return 0;
     }
 
@@ -132,7 +152,7 @@ export class SubCounter {
     return 1;
   }
 
-  private addStateToNumber(state: SubUserstate | SubGiftUserstate | AnonSubGiftUserstate, user = "UNKNOWN"): void {
+  private addStateToNumber(state: CommonSubUserstate, user: string): void {
     let tierMultiplier = 1;
     let tierString = "tier 1";
     if (state) {
@@ -150,6 +170,11 @@ export class SubCounter {
           tierString = "prime";
           break;
       }
+    }
+
+    // duplicate prime sub issue
+    if (tierMultiplier === 0) {
+      return;
     }
 
     this.setNumber(this._subNumber + tierMultiplier);

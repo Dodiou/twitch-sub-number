@@ -1,31 +1,39 @@
-import React, { ChangeEvent } from "react";
+import React, { useCallback } from "react";
+import { ElectronTSN } from "../../../types/preload";
+import "./FilePicker.css";
+
+declare const electronTSN: ElectronTSN;
 
 export interface FilePickerProps {
-  loadNumber?: boolean;
-  loadNumberChange: (newLoadNumber: boolean) => void;
+  showFullpath?: boolean;
+  filepath: string;
   filepathChange: (newFilepath: string) => void;
 }
 
-const FilePicker = (props: FilePickerProps) => {
-  const onFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const firstFilepath = event.target.files?.[0]?.path;
-    if (!firstFilepath) {
-      return;
-    }
+const trimFilepath = (filepath: string): string => {
+  let lastDirIndex = filepath.lastIndexOf('/');
+  lastDirIndex = lastDirIndex >= 0 ? lastDirIndex : filepath.lastIndexOf('\\');
 
-    props.filepathChange(firstFilepath);
-  };
+  if (lastDirIndex >= 0 && lastDirIndex < filepath.length - 1) {
+    return filepath.substring(lastDirIndex + 1);
+  }
+  return filepath;
+};
+
+const FilePicker = (props: FilePickerProps) => {
+  const buttonClickHandler = useCallback(async () => {
+    const newFilepath = await electronTSN.onSelectFile();
+    if (newFilepath) {
+      props.filepathChange(newFilepath);
+    }
+  }, []);
+
+  const displayPath = props.showFullpath ? props.filepath : trimFilepath(props.filepath);
 
   return (
-    <div className="FilePicker">
-      <label>
-        <input type="checkbox" onChange={() => props.loadNumberChange(!props.loadNumber)} checked={props.loadNumber}/>
-        Load number from file?
-      </label>
-      <label>
-        Output file:
-        <input type="file" onChange={onFilesChange} />
-      </label>
+    <div className="FilePicker Input">
+      <span className="FilePicker__path" title={displayPath}>{displayPath}</span>
+      <button className="FilePicker__button Button" onClick={buttonClickHandler}>Browse...</button>
     </div>
   )
 };

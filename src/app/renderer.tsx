@@ -28,7 +28,9 @@
 
 import './styles/main.css';
 import './styles/variables.css';
+
 import './styles/button.css';
+import './styles/form.css';
 import './styles/input.css';
 
 import React from "react";

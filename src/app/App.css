@@ -1,0 +1,12 @@
+.App__controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+
+  margin-bottom: 1rem;
+}
+
+.App__controls > .Form {
+  flex: 1 1 auto;
+}

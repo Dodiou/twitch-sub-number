@@ -86,12 +86,16 @@
           "@electron-forge/plugin-webpack",
           {
             "mainConfig": "./webpack.main.config.js",
+            "devContentSecurityPolicy": "default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-eval' 'unsafe-inline' data:; connect-src 'self' wss://irc-ws.chat.twitch.tv/",
             "renderer": {
               "config": "./webpack.renderer.config.js",
               "entryPoints": [
                 {
                   "html": "./src/app/index.html",
                   "js": "./src/app/renderer.tsx",
+                  "preload": {
+                    "js": "./src/preload.ts"
+                  },
                   "name": "main_window"
                 }
               ]
