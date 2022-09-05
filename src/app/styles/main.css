@@ -1,4 +1,11 @@
+html, body, #root {
+  height: 100%;
+}
+
 body {
+  margin: 0;
+  padding: 0.5rem;
+
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
 
@@ -7,6 +14,6 @@ body {
   font-size: var(--font-size-medium);
 }
 
-body * {
+html * {
   box-sizing: border-box !important;
 }

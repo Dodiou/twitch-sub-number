@@ -1,4 +1,5 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+import { SelectFileEvent } from "../../../types/preload";
 import FilePicker from "../FilePicker/FilePicker";
 
 export interface SettingsProps {
@@ -7,19 +8,10 @@ export interface SettingsProps {
   loadNumber?: boolean;
   loadNumberChange: (newLoadNumber: boolean) => void;
   filepath: string;
-  filepathChange: (newFilepath: string) => void;
+  fileChange: (event: SelectFileEvent) => void;
 }
 
 const Settings = (props: SettingsProps) => {
-  const onFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const firstFilepath = event.target.files?.[0]?.path;
-    if (!firstFilepath) {
-      return;
-    }
-
-    props.filepathChange(firstFilepath);
-  };
-
   return (
     <div className="Settings Form">
       <div className="Form__group">
@@ -47,7 +39,11 @@ const Settings = (props: SettingsProps) => {
 
       <label className="Form__group">
         <div className="Form__label">Output file:</div>
-        <FilePicker filepath={props.filepath} filepathChange={props.filepathChange} />
+        <FilePicker
+          readFromFile={props.loadNumber}
+          filepath={props.filepath}
+          fileChange={props.fileChange}
+        />
       </label>
     </div>
   )

@@ -89,7 +89,6 @@ export class SubCounter {
 
   public setNumber(value: number): void {
     this._subNumber = value;
-    this.emitNumber(this._subNumber);
   }
 
   public getNumber(): number {
@@ -177,7 +176,8 @@ export class SubCounter {
       return;
     }
 
-    this.setNumber(this._subNumber + tierMultiplier);
+    this._subNumber += tierMultiplier;
     console.log("New %s sub for %s.   Total: %d", tierString, user, this._subNumber);
+    this.emitNumber(this._subNumber);
   }
 }

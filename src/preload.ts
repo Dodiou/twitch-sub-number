@@ -4,9 +4,11 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { ElectronTSN } from "./types/preload";
 
-contextBridge.exposeInMainWorld('electronTSN', {
+const electronTSN: ElectronTSN = {
   writeToFile: (contents: string) => ipcRenderer.invoke("writeToFile", contents),
-  onSelectFile: () => ipcRenderer.invoke("onSelectFile"),
+  onSelectFile: (readFile?: boolean) => ipcRenderer.invoke("onSelectFile", readFile),
   logToFile: (contents: string) => ipcRenderer.invoke("logToFile", contents),
-} as ElectronTSN);
+};
+
+contextBridge.exposeInMainWorld('electronTSN', electronTSN);
 

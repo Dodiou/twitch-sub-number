@@ -5,7 +5,7 @@ import { throttle } from "lodash-es";
 import { bufferThrottle } from "./mixins";
 
 
-const THROTTLE_TIME = 100;
+const THROTTLE_TIME = 500;
 const THROTTLE_OPTIONS = { leading: false, trailing: true };
 
 
@@ -61,7 +61,20 @@ export const writeToFile = throttle(
   THROTTLE_OPTIONS
 );
 
-export const readNumFromFile = (filename: string) => {
-  const numFromFile = fs.readFileSync(filename).toString();
-  return parseInt(numFromFile) || 0;
+export const readNumFromFile = (filename: string): number => {
+  console.log("Reading number from file...");
+  if (!fs.existsSync(filename)) {
+    console.log("Could not read from file. File does not exist.");
+    return 0;
+  }
+
+  try {
+    const numFromFile = fs.readFileSync(filename).toString();
+    // convert NaN to 0.
+    return parseInt(numFromFile) || 0;
+  }
+  catch(err) {
+    console.error(err);
+    return 0;
+  }
 };

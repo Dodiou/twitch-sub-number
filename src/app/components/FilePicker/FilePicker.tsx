@@ -1,13 +1,14 @@
-import React, { useCallback } from "react";
-import { ElectronTSN } from "../../../types/preload";
+import React from "react";
+import { ElectronTSN, SelectFileEvent } from "../../../types/preload";
 import "./FilePicker.css";
 
 declare const electronTSN: ElectronTSN;
 
 export interface FilePickerProps {
-  showFullpath?: boolean;
   filepath: string;
-  filepathChange: (newFilepath: string) => void;
+  fileChange: (event: SelectFileEvent) => void;
+  readFromFile?: boolean;
+  showFullpath?: boolean;
 }
 
 const trimFilepath = (filepath: string): string => {
@@ -21,12 +22,18 @@ const trimFilepath = (filepath: string): string => {
 };
 
 const FilePicker = (props: FilePickerProps) => {
-  const buttonClickHandler = useCallback(async () => {
-    const newFilepath = await electronTSN.onSelectFile();
-    if (newFilepath) {
-      props.filepathChange(newFilepath);
+  const buttonClickHandler = async () => {
+    try {
+      const event = await electronTSN.onSelectFile(props.readFromFile);
+
+      if (event.filepath) {
+        props.fileChange(event);
+      }
     }
-  }, []);
+    catch(err) {
+      console.log(err);
+    }
+  };
 
   const displayPath = props.showFullpath ? props.filepath : trimFilepath(props.filepath);
 
