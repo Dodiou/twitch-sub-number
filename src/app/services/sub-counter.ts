@@ -34,7 +34,8 @@ export class SubCounter {
     this.client = new Client({
       channels: [this._channel],
       connection: {
-        reconnect: true
+        reconnect: true,
+        maxReconnectInverval: 10
       }
     });
 
@@ -58,8 +59,8 @@ export class SubCounter {
      // TODO fix tmi.js types for this
     this.client.on("sub" as any, (_channel, user: string, _months, _message, state: SubUserstate) => this.addStateToNumber(state, user));
 
-    this.client.on("part", (channel) => console.log("Leaving channel:", channel));
-    this.client.on("join", (channel) => console.log("Joining channel:", channel));
+    this.client.on("part", (channel, user, self) => self && console.log("User %s leaving channel %s.", user, channel));
+    this.client.on("join", (channel, user, self) => self && console.log("User %s joining channel %s.", user, channel));
     this.client.on("connected", () => this.connected = true);
     this.client.on("disconnected", () => this.connected = false);
   }
