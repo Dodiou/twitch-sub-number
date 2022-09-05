@@ -10,3 +10,7 @@ body {
 body * {
   box-sizing: border-box !important;
 }
+
+div {
+  margin-bottom: 1rem;
+}

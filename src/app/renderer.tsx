@@ -26,7 +26,7 @@
  * ```
  */
 
-import './index.css';
+import './styles/main.css';
 import './styles/variables.css';
 import './styles/button.css';
 import './styles/input.css';

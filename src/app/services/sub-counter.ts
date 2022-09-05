@@ -1,7 +1,7 @@
 import { AnonSubGiftUserstate, Client, SubGiftUserstate, SubUserstate } from "tmi.js";
 
 export interface SubCounterOpts {
-  channel?: string;
+  channel: string;
   subNumber?: number;
 }
 
@@ -15,17 +15,24 @@ interface HandlerMap {
 const logGiftContinuation = (_channel: string, user: string) => console.log("Gift sub continuation for %s.   Not updating total.", user);
 const logMysteryGifts = (user: string, numOfSubs: number) => console.log("%s gifted %d subs. Total will be updated per each sub event.", user, numOfSubs);
 
+const MAX_QUEUE_LENGTH = 5;
+
 export class SubCounter {
   private readonly client: Client;
   private readonly handlers: HandlerMap = {};
-  private nextHandlerId = 0;
-  private _subNumber: number;
 
-  constructor({ channel = "DumbDog", subNumber = 0 }: SubCounterOpts = {}) {
+  private nextHandlerId = 0;
+  private connected = false;
+  private _subNumber: number;
+  private _channel: string | undefined;
+  private primeSubQueue: string[] = [];
+
+  constructor({ channel, subNumber = 0 }: SubCounterOpts = { channel: "DumbDog" }) {
     this._subNumber = subNumber;
+    this._channel = channel;
 
     this.client = new Client({
-      channels: [channel],
+      channels: [this._channel],
       connection: {
         reconnect: true
       }
@@ -51,7 +58,32 @@ export class SubCounter {
      // TODO fix tmi.js types for this
     this.client.on("sub" as any, (_channel, user: string, _months, _message, state: SubUserstate) => this.addStateToNumber(state, user));
 
-    console.log('Connecting to channel "%s". Starting number at "%d". Waiting for subs...', channel, subNumber);
+    this.client.on("part", (channel) => console.log("Leaving channel:", channel));
+    this.client.on("join", (channel) => console.log("Joining channel:", channel));
+    this.client.on("connected", () => this.connected = true);
+    this.client.on("disconnected", () => this.connected = false);
+  }
+
+  public disconnect(): void {
+    this.client.disconnect().catch(console.error);
+  }
+
+  public setChannel(channel: string | undefined): void {
+    const prevChannel = this._channel;
+    this._channel = channel;
+
+    if (!this.connected || prevChannel === this._channel) {
+      return;
+    }
+
+    if (prevChannel) {
+      this.client.part(prevChannel).catch(console.error);
+    }
+
+    if (this._channel) {
+      this.client.join(this._channel).catch(console.error);
+    }
+    this.primeSubQueue = [];
   }
 
   public setNumber(value: number): void {
@@ -82,6 +114,23 @@ export class SubCounter {
     )
   }
 
+  /**
+   * 9/5/2022, I have seen some Prime subs get duplicate messages in chat,
+   * this method will check the prime sub username against the previous X.
+   * The duplicates seem to be come immediately, so queue size can be small.
+   */
+  private getPrimeMultiplierFor(user: string): number {
+    if (this.primeSubQueue.includes(user)) {
+      return 0;
+    }
+
+    if (this.primeSubQueue.length >= MAX_QUEUE_LENGTH) {
+      this.primeSubQueue.shift();
+    }
+    this.primeSubQueue.push(user);
+    return 1;
+  }
+
   private addStateToNumber(state: SubUserstate | SubGiftUserstate | AnonSubGiftUserstate, user = "UNKNOWN"): void {
     let tierMultiplier = 1;
     let tierString = "tier 1";
@@ -96,6 +145,7 @@ export class SubCounter {
           tierString = "tier 3";
           break;
         case "Prime":
+          tierMultiplier = this.getPrimeMultiplierFor(user);
           tierString = "prime";
           break;
       }
