@@ -39,7 +39,7 @@ const FilePicker = (props: FilePickerProps) => {
 
   return (
     <div className="FilePicker Input">
-      <span className="FilePicker__path" title={displayPath}>{displayPath}</span>
+      <span className="FilePicker__path" title={props.filepath}>{displayPath}</span>
       <button className="FilePicker__button Button" onClick={buttonClickHandler}>Browse...</button>
     </div>
   )

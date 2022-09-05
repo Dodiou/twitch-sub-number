@@ -96,6 +96,10 @@ export class SubCounter {
   }
 
   public setCountUpgrades(countUpgrades: boolean): void {
+    if (countUpgrades !== this._countUpgrades) {
+      return;
+    }
+
     const logMessage = countUpgrades ? "Counting sub upgrades." : "No longer counting sub upgrades."
     this._countUpgrades = countUpgrades;
     console.log(logMessage);
