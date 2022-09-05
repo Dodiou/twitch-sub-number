@@ -1,0 +1,29 @@
+.Button {
+  margin-inline-end: 0.5rem;
+  height: 2rem;
+  font-size: var(--font-size-medium);
+
+  background-color: var(--normal-bg);
+  color: var(--normal-fg);
+  border: 1px solid var(--normal-bd);
+  border-radius: 0.125rem;
+}
+
+.Button:disabled {
+  background-color: var(--normal-disabled-bg);
+  color: var(--normal-disabled-fg);
+  border-color: var(--normal-disabled-bd);
+}
+
+.Button.Button__primary {
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
+  border-color: var(--primary-bd);
+}
+
+.Button.Button__primary:disabled {
+  background-color: var(--primary-disabled-bg);
+  color: var(--primary-disabled-fg);
+  border-color: var(--primary-disabled-bd);
+}
+

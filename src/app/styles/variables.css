@@ -1,0 +1,77 @@
+/***********************************************************
+ * Color scheme generated from https://theme.numl.design/. *
+ ***********************************************************/
+
+:root {
+  --color-medium-bd: rgb(59, 77, 96);
+  --color-medium-bg: rgb(39, 54, 69);
+  --color-medium-fg: rgb(191, 214, 242);
+  --color-light-fg-strong: rgb(191, 214, 242);
+  
+  --color-dark-bd: rgb(59, 77, 96);
+  --color-dark-bg: rgb(33, 37, 41);
+  --color-dark-fg: rgb(126, 180, 230);
+  --color-dark-fg-strong: rgb(96, 157, 211);
+  
+  --color-light-bd: rgb(59, 77, 96);
+  --color-light-bg: rgb(191, 214, 242);
+  --color-light-fg: rgb(39, 54, 69);
+  --color-light-fg-strong: rgb(39, 54, 69);
+
+  --color-focus-outline: rgb(90, 148, 198);
+
+  --normal-bd: rgb(59, 77, 96);
+  --normal-bg: rgb(32, 32, 32);
+  --normal-fg: rgb(126, 180, 230);
+  --normal-disabled-bd: rgb(55, 59, 64);
+  --normal-disabled-bg: rgb(38, 40, 42);
+  --normal-disabled-fg: rgb(93, 103, 112);
+  --normal-hover-bd: rgb(59, 77, 96);
+  --normal-hover-bg: rgb(39, 43, 47);
+  --normal-hover-fg: rgb(126, 180, 230);
+  --normal-selected-bd: rgb(59, 77, 96);
+  --normal-selected-bg: rgb(16, 16, 16);
+  --normal-selected-bf: rgb(126, 180, 230);
+
+  --primary-bd: rgb(42, 73, 100);
+  --primary-bg: rgb(42, 73, 100);
+  --primary-fg: rgb(220, 223, 229);
+  --primary-disabled-bd: rgb(51, 57, 63);
+  --primary-disabled-bg: rgb(51, 57, 63);
+  --primary-disabled-fg: rgb(122, 124, 127);
+  --primary-hover-bd: rgb(42, 73, 100);
+  --primary-hover-bg: rgb(56, 84, 110);
+  --primary-hover-fg: rgb(220, 223, 229);
+  --primary-selected-bd: rgb(42, 73, 100);
+  --primary-selected-bg: rgb(19, 33, 46);
+  --primary-selected-fg: rgb(220, 223, 229);
+
+  --input-bd: rgb(59, 77, 96);
+  --input-bg: rgb(28, 28, 28);
+  --input-fg: rgb(220, 223, 229);
+  --input-placeholder-bd: rgb(59, 77, 96);
+  --input-placeholder-bg: rgb(28, 28, 28);
+  --input-placeholder-fg: rgb(54, 69, 82);
+  --input-disabled-bd: rgb(58, 62, 67);
+  --input-disabled-bg: rgb(42, 44, 46);
+  --input-disabled-fg: rgb(69, 75, 80);
+}
+
+/*******************
+ * Text variables. *
+ *******************/
+
+:root {
+  --font-size-base: 1.125rem;
+  --font-size-step: 0.25rem;
+  --font-size-medium: var(--font-size-base);
+  --font-size-large: calc(1 * var(--font-size-step) + var(--font-size-base));
+  --font-size-x-large: calc(4 * var(--font-size-step) + var(--font-size-base));
+  --font-size-xx-large: calc(9 * var(--font-size-step) + var(--font-size-base));
+  --font-size-xxx-large: calc(16 * var(--font-size-step) + var(--font-size-base));
+  --font-size-small: calc(-1 * var(--font-size-step) + var(--font-size-base));
+  --font-size-x-small: calc(-2 * var(--font-size-step) + var(--font-size-base));
+
+  --font-weight-normal: 500;
+  --font-weight-strong: 700;
+}

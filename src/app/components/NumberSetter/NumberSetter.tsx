@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import "./NumberSetter.css";
 
 export interface NumberSetterProps {
   value: number;
@@ -34,9 +35,11 @@ const NumberSetter = (props: NumberSetterProps) => {
 
   return (
     <form className="NumberSetter" onSubmit={submitHandler}>
-      <input type="number" onChange={updateNumberValue} value={number} />
-      <button type="submit" className="Button Button__primary" disabled={!editMode}>Set number</button>
-      <button type="button" className="Button" disabled={!editMode} onClick={() => setEditMode(false)}>Cancel</button>
+      <input type="number" className="Input" onChange={updateNumberValue} value={number} />
+      <div className="NumberSetter__button-bar">
+        <button type="submit" className="Button Button__primary" disabled={!editMode}>Set number</button>
+        <button type="button" className="Button" disabled={!editMode} onClick={() => setEditMode(false)}>Cancel</button>
+      </div>
     </form>
   )
 };

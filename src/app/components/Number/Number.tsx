@@ -8,7 +8,7 @@ export interface NumberProps {
 const Number = (props: NumberProps) => {
   return (
     <div className="Number">
-      <div className="Number__label">Current sub number:</div>
+      <div className="Number__label">Current sub number</div>
       <div className="Number__value">{props.value}</div>
     </div>
   )

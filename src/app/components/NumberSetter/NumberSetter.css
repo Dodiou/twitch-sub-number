@@ -1,0 +1,9 @@
+.NumberSetter {
+  max-width: 20rem;
+}
+
+.NumberSetter__button-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

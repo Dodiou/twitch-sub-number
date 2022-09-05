@@ -1,0 +1,11 @@
+.Input {
+  width: 100%;
+}
+
+.Input.Input__small {
+  max-width: 10rem;
+}
+
+.Input.Input__large {
+  max-width: 10rem;
+}

@@ -4,7 +4,7 @@ import Number from "./components/Number/Number";
 import FilePicker from "./components/FilePicker/FilePicker";
 import { SubCounter } from "./services/sub-counter";
 
-const subCounter = new SubCounter({ channel: "DumbDog" });
+const subCounter = new SubCounter({ channel: "Raysfire" });
 
 const App = () => {
   const [filepath, setFilepath] = useState<string>("./sub-number.txt");

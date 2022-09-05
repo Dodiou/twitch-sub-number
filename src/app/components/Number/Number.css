@@ -5,14 +5,15 @@
   max-width: 30rem;
 
   border-radius: 1rem;
-  background-color: #CCC;
+  background-color: var(--color-medium-bg);
+  color: var(--color-medium-fg)
 }
 
 .Number__label {
   margin: auto;
   text-align: center;
 
-  font-size: 1rem;
+  font-size: var(--font-size-large);
   font-weight: bold;
 }
 
@@ -20,6 +21,6 @@
   margin: auto;
   text-align: center;
 
-  font-size: 3rem;
+  font-size: var(--font-size-xxx-large);
   font-weight: bold;
 }
