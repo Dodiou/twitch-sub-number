@@ -1,8 +1,9 @@
 import fs from "fs";
 import { BrowserWindow, dialog } from "electron";
-
 import { throttle } from "lodash-es";
+
 import { bufferThrottle } from "./mixins";
+import { Logger } from "./main-logger";
 
 
 const THROTTLE_TIME = 500;
@@ -24,28 +25,28 @@ export const selectFile = (browerWindow: BrowserWindow): Promise<string> => {
       return results.filePaths[0];
     })
     .catch((err) => {
-      console.error(err);
+      Logger.error(err);
       return "";
     });
 }
 
 const _writeToFile = (filename: string, contents: string) => {
   try {
-    console.log("Writing to file:", contents);
+    Logger.log("Writing to file:", contents);
     fs.writeFileSync(filename, contents);
   }
   catch (err) {
-    console.error(err);
+    Logger.error(err);
   }
 };
 
 const _appendToFile = (filename: string, contents: string) => {
   try {
-    console.log("Writing to file:", contents);
+    Logger.log("Writing to file:", contents);
     fs.writeFileSync(filename, contents, { flag: "a+" });
   }
   catch (err) {
-    console.error(err);
+    Logger.error(err);
   }
 };
 
@@ -62,9 +63,9 @@ export const writeToFile = throttle(
 );
 
 export const readNumFromFile = (filename: string): number => {
-  console.log("Reading number from file...");
+  Logger.log("Reading number from file...");
   if (!fs.existsSync(filename)) {
-    console.log("Could not read from file. File does not exist.");
+    Logger.log("Could not read from file. File does not exist.");
     return 0;
   }
 
@@ -74,7 +75,7 @@ export const readNumFromFile = (filename: string): number => {
     return parseInt(numFromFile) || 0;
   }
   catch(err) {
-    console.error(err);
+    Logger.error(err);
     return 0;
   }
 };

@@ -2,6 +2,8 @@ import React from "react";
 import { ElectronTSN, SelectFileEvent } from "../../../types/preload";
 import "./FilePicker.css";
 
+import { Logger } from "../../services/ui-logger";
+
 declare const electronTSN: ElectronTSN;
 
 export interface FilePickerProps {
@@ -31,7 +33,7 @@ const FilePicker = (props: FilePickerProps) => {
       }
     }
     catch(err) {
-      console.log(err);
+      Logger.error(err);
     }
   };
 

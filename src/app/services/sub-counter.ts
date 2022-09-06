@@ -1,5 +1,7 @@
 import { Client, CommonSubUserstate, SubUserstate } from "tmi.js";
 
+import { Logger } from "./ui-logger";
+
 export interface SubCounterOpts {
   channel: string;
   subNumber?: number;
@@ -12,7 +14,7 @@ interface HandlerMap {
   [key: string]: HandlerFunc;
 }
 
-const logMysteryGifts = (user: string, numOfSubs: number) => console.log("%s gifted %d subs. Total will be updated per each sub event.", user, numOfSubs);
+const logMysteryGifts = (user: string, numOfSubs: number) => Logger.log("%s gifted %d subs. Total will be updated per each sub event.", user, numOfSubs);
 
 const MAX_QUEUE_LENGTH = 5;
 
@@ -39,7 +41,7 @@ export class SubCounter {
       }
     });
 
-    this.client.connect().catch(console.error);
+    this.client.connect().catch(Logger.error);
 
     // Do not count the following events:
     //   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
@@ -59,14 +61,14 @@ export class SubCounter {
      // TODO fix tmi.js types for this
     this.client.on("sub" as any, (_channel, user: string, _months, _message, state: SubUserstate) => this.addStateToNumber(state, user));
 
-    this.client.on("part", (channel, user, self) => self && console.log("User %s leaving channel %s.", user, channel));
-    this.client.on("join", (channel, user, self) => self && console.log("User %s joining channel %s.", user, channel));
+    this.client.on("part", (channel, user, self) => self && Logger.log("User %s leaving channel %s.", user, channel));
+    this.client.on("join", (channel, user, self) => self && Logger.log("User %s joining channel %s.", user, channel));
     this.client.on("connected", () => this.connected = true);
     this.client.on("disconnected", () => this.connected = false);
   }
 
   public disconnect(): void {
-    this.client.disconnect().catch(console.error);
+    this.client.disconnect().catch(Logger.error);
   }
 
   public setChannel(channel: string | undefined): void {
@@ -78,11 +80,11 @@ export class SubCounter {
     }
 
     if (prevChannel) {
-      this.client.part(prevChannel).catch(console.error);
+      this.client.part(prevChannel).catch(Logger.error);
     }
 
     if (this._channel) {
-      this.client.join(this._channel).catch(console.error);
+      this.client.join(this._channel).catch(Logger.error);
     }
     this.primeSubQueue = [];
   }
@@ -102,7 +104,7 @@ export class SubCounter {
 
     const logMessage = countUpgrades ? "Counting sub upgrades." : "No longer counting sub upgrades."
     this._countUpgrades = countUpgrades;
-    console.log(logMessage);
+    Logger.log(logMessage);
   }
   
   public getCountUpgrades(): boolean {
@@ -127,7 +129,7 @@ export class SubCounter {
       this.addStateToNumber(state, user);
     }
     else {
-      console.log("%s sub upgrade for %s.   Not updating total.", type, user);
+      Logger.log("%s sub upgrade for %s.   Not updating total.", type, user);
     }
   }
 
@@ -144,7 +146,7 @@ export class SubCounter {
    */
   private getPrimeMultiplierFor(user: string): number {
     if (this.primeSubQueue.includes(user)) {
-      console.log("Duplicate prime sub for %s detected.", user);
+      Logger.log("Duplicate prime sub for %s detected.", user);
       return 0;
     }
 
@@ -181,7 +183,7 @@ export class SubCounter {
     }
 
     this._subNumber += tierMultiplier;
-    console.log("New %s sub for %s.   Total: %d", tierString, user, this._subNumber);
+    Logger.log("New %s sub for %s.   Total: %d", tierString, user, this._subNumber);
     this.emitNumber(this._subNumber);
   }
 }
