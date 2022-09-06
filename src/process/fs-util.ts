@@ -9,6 +9,16 @@ const THROTTLE_TIME = 500;
 const THROTTLE_OPTIONS = { leading: false, trailing: true };
 
 
+const _writeToFile = (filename: string, contents: string) => {
+  try {
+    Logger.log("Writing to file:", contents);
+    fs.writeFileSync(filename, contents);
+  }
+  catch (err) {
+    Logger.error(err);
+  }
+};
+
 export const selectFile = (browerWindow: BrowserWindow): Promise<string> => {
   return dialog.showOpenDialog(
     browerWindow,
@@ -21,23 +31,20 @@ export const selectFile = (browerWindow: BrowserWindow): Promise<string> => {
       if (results.canceled) {
         return "";
       }
-      return results.filePaths[0];
+      const filepath = results.filePaths[0];
+
+      if (!fs.existsSync(filepath)) {
+        Logger.log("File does not exist. Creating file starting at 0.");
+        _writeToFile(filepath, "0");
+      }
+
+      return filepath;
     })
     .catch((err) => {
       Logger.error(err);
       return "";
     });
 }
-
-const _writeToFile = (filename: string, contents: string) => {
-  try {
-    Logger.log("Writing to file:", contents);
-    fs.writeFileSync(filename, contents);
-  }
-  catch (err) {
-    Logger.error(err);
-  }
-};
 
 export const writeToFile = throttle(
   _writeToFile,
@@ -47,12 +54,14 @@ export const writeToFile = throttle(
 
 export const readNumFromFile = (filename: string): number => {
   Logger.log("Reading number from file...");
-  if (!fs.existsSync(filename)) {
-    Logger.log("Could not read from file. File does not exist.");
-    return 0;
-  }
 
   try {
+    if (!fs.existsSync(filename)) {
+      Logger.log("Could not read from file. File does not exist. Creating file starting at 0.");
+      _writeToFile(filename, "0");
+      return 0;
+    }
+
     const numFromFile = fs.readFileSync(filename).toString();
     // convert NaN to 0.
     return parseInt(numFromFile) || 0;

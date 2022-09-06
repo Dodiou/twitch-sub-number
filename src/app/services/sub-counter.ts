@@ -161,6 +161,8 @@ export class SubCounter {
     let tierMultiplier = 1;
     let tierString = "tier 1";
     if (state) {
+      // TODO there is a "msg-param-gift-months", which should say how many months were gifted.
+      //      might be nice to add an option to count those.
       switch (state["msg-param-sub-plan"]) {
         case "2000":
           tierMultiplier = 2;
