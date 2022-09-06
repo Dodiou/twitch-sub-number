@@ -1,0 +1,66 @@
+.ButtonBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.ButtonBar > :not(:last-child) {
+  margin-inline-end: 0.5rem;
+}
+
+.Button {
+  height: 2rem;
+  font-size: var(--font-size-medium);
+  border-radius: 0.125rem;
+
+  background-color: var(--normal-bg);
+  color: var(--normal-fg);
+  border: 1px solid var(--normal-bd);
+}
+
+.Button:hover {
+  background-color: var(--normal-hover-bg);
+  color: var(--normal-hover-fg);
+  border-color: var(--normal-hover-bd);
+}
+
+.Button:active {
+  background-color: var(--normal-selected-bg);
+  color: var(--normal-selected-fg);
+  border-color: var(--normal-selected-bd);
+}
+
+.Button:disabled,
+.Button:disabled:hover,
+.Button:disabled:active {
+  background-color: var(--normal-disabled-bg);
+  color: var(--normal-disabled-fg);
+  border-color: var(--normal-disabled-bd);
+}
+
+.Button.Button__primary {
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
+  border-color: var(--primary-bd);
+}
+
+.Button.Button__primary:hover {
+  background-color: var(--primary-hover-bg);
+  color: var(--primary-hover-fg);
+  border-color: var(--primary-hover-bd);
+}
+
+.Button.Button__primary:active {
+  background-color: var(--primary-selected-bg);
+  color: var(--primary-selected-fg);
+  border-color: var(--primary-selected-bd);
+}
+
+.Button.Button__primary:disabled,
+.Button.Button__primary:disabled:hover,
+.Button.Button__primary:disabled:active {
+  background-color: var(--primary-disabled-bg);
+  color: var(--primary-disabled-fg);
+  border-color: var(--primary-disabled-bd);
+}
+

@@ -1,0 +1,21 @@
+.FilePicker.Input {
+  display: flex;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.FilePicker__path {
+  flex: 1 1 auto;
+  border-inline-end: 1px solid var(--input-bd);
+  padding: 0.25rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Button.FilePicker__button {
+  flex: 0 0 auto;
+  display: inline-block;
+  border: none;
+}

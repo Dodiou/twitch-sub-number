@@ -1,0 +1,29 @@
+.Number {
+  margin: auto;
+  padding: 0.5rem;
+  width: 90%;
+  max-width: 30rem;
+  border-radius: 1rem;
+
+  background-color: var(--color-medium-bg);
+  border: 1px solid var(--color-medium-bd);
+  color: var(--color-medium-fg)
+}
+
+.Number__label {
+  margin: auto;
+  text-align: center;
+
+  font-size: var(--font-size-large);
+  font-weight: bold;
+}
+
+.Number__value {
+  margin: auto;
+  text-align: center;
+
+  font-size: var(--font-size-xxx-large);
+  font-weight: var(--font-weight-strong);
+
+  color: var(--color-medium-fg-strong);
+}
