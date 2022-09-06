@@ -84,7 +84,12 @@ export class SubCounter {
     }
 
     if (this._channel) {
-      this.client.join(this._channel).catch(Logger.error);
+      this.client.join(this._channel).catch(
+        (err) => {
+          Logger.error(err);
+          this._channel = undefined;
+        }
+      );
     }
     this.primeSubQueue = [];
   }
