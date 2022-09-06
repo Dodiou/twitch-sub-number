@@ -1,7 +1,7 @@
 {
   "name": "twitch-sub-number",
   "productName": "twitch-sub-number",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.0",
   "description": "Twitch sub number to file",
   "main": ".webpack/main",
   "scripts": {
