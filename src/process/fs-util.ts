@@ -2,7 +2,6 @@ import fs from "fs";
 import { BrowserWindow, dialog } from "electron";
 import { throttle } from "lodash-es";
 
-import { bufferThrottle } from "./mixins";
 import { Logger } from "./main-logger";
 
 
@@ -12,7 +11,7 @@ const THROTTLE_OPTIONS = { leading: false, trailing: true };
 
 export const selectFile = (browerWindow: BrowserWindow): Promise<string> => {
   return dialog.showOpenDialog(
-    browerWindow, // TODO
+    browerWindow,
     {
       properties: ["openFile", "promptToCreate", "dontAddToRecent"],
       filters: [{ name: "text", extensions: ["txt"] }],
@@ -39,22 +38,6 @@ const _writeToFile = (filename: string, contents: string) => {
     Logger.error(err);
   }
 };
-
-const _appendToFile = (filename: string, contents: string) => {
-  try {
-    Logger.log("Writing to file:", contents);
-    fs.writeFileSync(filename, contents, { flag: "a+" });
-  }
-  catch (err) {
-    Logger.error(err);
-  }
-};
-
-export const logToFile = bufferThrottle(
-  (contentsBuffer) => _appendToFile("log.txt", contentsBuffer.join("\n")),
-  THROTTLE_TIME,
-  THROTTLE_OPTIONS
-)
 
 export const writeToFile = throttle(
   _writeToFile,

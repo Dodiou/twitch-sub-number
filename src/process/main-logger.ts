@@ -4,12 +4,14 @@ import { BaseLogger } from "../types/logger";
 class MainLogger implements BaseLogger {
   private browserWindow?: BrowserWindow;
 
-  public bridgeToRenderer(browserWindow: BrowserWindow): void {
+  public setBrowserWindow(browserWindow: BrowserWindow | undefined): void {
     this.browserWindow = browserWindow;
   }
 
   public error(...args: any[]) {
     if (!this.browserWindow) {
+      console.log("No window connected to logging. Logging to console.");
+      console.error(...args);
       return;
     }
 
@@ -18,6 +20,8 @@ class MainLogger implements BaseLogger {
 
   public log(...args: any[]) {
     if (!this.browserWindow) {
+      console.log("No window connected to logging. Logging to console.");
+      console.log(...args);
       return;
     }
 

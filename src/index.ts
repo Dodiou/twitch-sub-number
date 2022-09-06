@@ -20,14 +20,14 @@ const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
-    width: 800,
+    width: 1008,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
-  // A bit of duplication, but tracking output file here so UI can't send
-  // any file it wants to save.
+  // A bit of duplication, but tracking output file here so UI can't change
+  // the file that was chosen.
   let outputFile = "";
 
   ipcMain.handle("select-file", async (_event, readFile?: boolean) => {
@@ -52,7 +52,7 @@ const createWindow = (): void => {
     writeToFile(outputFile, "" + contents);
   });
 
-  Logger.bridgeToRenderer(mainWindow);
+  Logger.setBrowserWindow(mainWindow);
 
   const menu = Menu.buildFromTemplate([
     {
@@ -109,10 +109,11 @@ app.on('ready', () => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
+  Logger.setBrowserWindow(undefined);
+  // Ensure last number is written to file.
+  writeToFile.flush();
+
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
