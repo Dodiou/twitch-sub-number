@@ -98,7 +98,7 @@ export class SubCounter {
   }
 
   public setCountUpgrades(countUpgrades: boolean): void {
-    if (countUpgrades !== this._countUpgrades) {
+    if (countUpgrades === this._countUpgrades) {
       return;
     }
 

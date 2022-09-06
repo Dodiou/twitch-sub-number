@@ -30,7 +30,7 @@ const Settings = (props: SettingsProps) => {
           <input
             className="Input"
             type="checkbox"
-            onChange={() => props.countUpgradesChange(!props.loadNumber)}
+            onChange={() => props.countUpgradesChange(!props.countUpgrades)}
             checked={props.countUpgrades}
           />
           <span className="Form__checkbox-label">Count sub upgrades</span>
