@@ -54,7 +54,15 @@ const App = () => {
     setSubNumber(newNumber);
     electronTSN.writeToFile("" + newNumber).catch(console.error);
     return true;
-  }
+  };
+
+  const channelChangeHandler = (newChannel: string) => {
+    if (!newChannel) {
+      return false;
+    }
+
+    setChannel(newChannel);
+  };
 
   return (
     <div className="App">
@@ -73,7 +81,7 @@ const App = () => {
           name="channel"
           type="text"
           value={channel}
-          valueChange={setChannel}
+          valueChange={channelChangeHandler}
         />
         <SingleValueForm
           buttonLabel="Set number"
