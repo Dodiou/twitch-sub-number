@@ -43,13 +43,15 @@ export class SubCounter {
 
     this.client.connect().catch(Logger.error);
 
-    // Do not count the following events:
+    // Optionally count these events:
     //   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
-    //   - anonsubmysterygift, submysterygift;   these are the "gifted # subs" messages. these are followed by the # of individual anonsubgift/subgift events
     this.client.on("anongiftpaidupgrade", (_channel, user, state) => this.onSubUpgrade(state, "Gift", user));
     this.client.on("giftpaidupgrade", (_channel, user, _sender, state) => this.onSubUpgrade(state, "Gift", user));
     this.client.on("primepaidupgrade", (_channel, user, _methods, state) => this.onSubUpgrade(state, "Prime", user));
 
+    // Do not count the following events:
+    //   - anonsubmysterygift, submysterygift;   these are the "gifted # subs" messages. these are followed by the # of individual anonsubgift/subgift events
+    //     these are ignored b/c gifting 1 sub will not show these, so need to rely on anonsubgift/subgift events
     this.client.on("anonsubmysterygift", (_channel, numOfSubs) => logMysteryGifts("Anon", numOfSubs));
     this.client.on("submysterygift", (_channel, user, numOfSubs) => logMysteryGifts(user, numOfSubs));
 
