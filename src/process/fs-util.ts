@@ -33,6 +33,11 @@ export const selectFile = (browerWindow: BrowserWindow): Promise<string> => {
       }
       const filepath = results.filePaths[0];
 
+      if (!filepath.endsWith(".txt")) {
+        dialog.showErrorBox("Error selecting file", 'Please create or select a file ending in ".txt".');
+        return "";
+      }
+
       if (!fs.existsSync(filepath)) {
         Logger.log("File does not exist. Creating file starting at 0.");
         _writeToFile(filepath, "0");
