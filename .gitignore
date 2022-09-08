@@ -112,6 +112,3 @@ out/
 
 # VS Code
 *.code-workspace
-
-# Program output files
-*.txt

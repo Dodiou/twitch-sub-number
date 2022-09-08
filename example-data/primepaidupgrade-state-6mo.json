@@ -1,0 +1,28 @@
+{
+    "badge-info": {
+        "subscriber": "5"
+    },
+    "badges": {
+        "subscriber": "0",
+        "sub-gifter": "25"
+    },
+    "color": "#8A2BE2",
+    "display-name": "Dodiou",
+    "emotes": null,
+    "flags": null,
+    "id": "befa596b-25d0-4de9-8485-20d86955feab",
+    "login": "dodiou",
+    "mod": false,
+    "msg-id": "primepaidupgrade",
+    "msg-param-sub-plan": "1000",
+    "room-id": "46728961",
+    "subscriber": true,
+    "system-msg": "Dodiou converted from a Prime sub to a Tier 1 sub!",
+    "tmi-sent-ts": "1662610838608",
+    "user-id": "46158195",
+    "user-type": null,
+    "emotes-raw": null,
+    "badge-info-raw": "subscriber/5",
+    "badges-raw": "subscriber/0,sub-gifter/25",
+    "message-type": "primepaidupgrade"
+}

@@ -1,0 +1,38 @@
+{
+  "badge-info": {
+    "subscriber": "3"
+  },
+  "badges": {
+    "subscriber": "3"
+  },
+  "color": "#8A2BE2",
+  "display-name": "Dodiou",
+  "emotes": {
+    "emotesv2_e117efe181e64650910759b54fbae31a": [
+      "0-9"
+    ]
+  },
+  "flags": null,
+  "id": "5d132b40-9817-4d62-ae8d-4e4f525f8958",
+  "login": "dodiou",
+  "mod": false,
+  "msg-id": "resub",
+  "msg-param-cumulative-months": "3",
+  "msg-param-months": false,
+  "msg-param-multimonth-duration": false,
+  "msg-param-multimonth-tenure": false,
+  "msg-param-should-share-streak": false,
+  "msg-param-sub-plan-name": "Birb",
+  "msg-param-sub-plan": "1000",
+  "msg-param-was-gifted": "false",
+  "room-id": "143753075",
+  "subscriber": true,
+  "system-msg": "Dodiou subscribed at Tier 1. They've subscribed for 3 months!",
+  "tmi-sent-ts": "1662576278743",
+  "user-id": "46158195",
+  "user-type": null,
+  "emotes-raw": "emotesv2_e117efe181e64650910759b54fbae31a:0-9",
+  "badge-info-raw": "subscriber/3",
+  "badges-raw": "subscriber/3",
+  "message-type": "resub"
+}

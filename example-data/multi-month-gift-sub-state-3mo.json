@@ -1,0 +1,36 @@
+{
+  "badge-info": {
+    "subscriber": "16"
+  },
+  "badges": {
+    "subscriber": "3012",
+    "sub-gifter": "400"
+  },
+  "color": "#8A2BE2",
+  "display-name": "Dodiou",
+  "emotes": null,
+  "flags": null,
+  "id": "dfbb5fd5-9b9f-4a85-859b-f3d5d8293ebc",
+  "login": "dodiou",
+  "mod": false,
+  "msg-id": "subgift",
+  "msg-param-gift-months": "3",
+  "msg-param-months": "7",
+  "msg-param-origin-id": "3f d3 f4 76 9d 53 c7 b6 a9 0a 0b cb 2e 49 77 f4 bf 06 58 b5",
+  "msg-param-recipient-display-name": "Dangers",
+  "msg-param-recipient-id": "143753075",
+  "msg-param-recipient-user-name": "dangers",
+  "msg-param-sender-count": "420",
+  "msg-param-sub-plan-name": "Channel Subscription (last_grey_wolf)",
+  "msg-param-sub-plan": "1000",
+  "room-id": "31736255",
+  "subscriber": true,
+  "system-msg": "Dodiou gifted 3 months of Tier 1 to Dangers. They've gifted 420 months in the channel!",
+  "tmi-sent-ts": "1662575408785",
+  "user-id": "46158195",
+  "user-type": null,
+  "emotes-raw": null,
+  "badge-info-raw": "subscriber/16",
+  "badges-raw": "subscriber/3012,sub-gifter/400",
+  "message-type": "subgift"
+}

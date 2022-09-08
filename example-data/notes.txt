@@ -1,0 +1,5 @@
+Multi month resub does not show length (example data was for 6 months).
+Gift subs do show length (example was 3 months). "true" = 1 month.
+primepaidupgrade was for 6 months
+
+the submysterygift-subgift-state file is immediately following the submysterygift-state

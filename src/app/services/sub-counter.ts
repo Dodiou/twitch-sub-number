@@ -131,7 +131,7 @@ export class SubCounter {
     return removeHandler;
   }
 
-  private onSubUpgrade(state: CommonSubUserstate, type: "Prime" | "Gift", user: string): void {
+  private onSubUpgrade(state: CommonSubUserstate | undefined, type: "Prime" | "Gift", user: string): void {
     if (this._countUpgrades) {
       this.addStateToNumber(state, user);
     }
@@ -164,12 +164,13 @@ export class SubCounter {
     return 1;
   }
 
-  private addStateToNumber(state: CommonSubUserstate, user: string): void {
+  private addStateToNumber(state: CommonSubUserstate | undefined, user: string): void {
     let tierMultiplier = 1;
+    let monthMultiplier = 1; // only changes for T1 gift subs
     let tierString = "tier 1";
     if (state) {
-      // TODO there is a "msg-param-gift-months", which should say how many months were gifted.
-      //      might be nice to add an option to count those.
+      monthMultiplier = parseInt(state["msg-param-gift-months"]) || 1;
+
       switch (state["msg-param-sub-plan"]) {
         case "2000":
           tierMultiplier = 2;
@@ -191,8 +192,11 @@ export class SubCounter {
       return;
     }
 
-    this._subNumber += tierMultiplier;
+    this._subNumber += tierMultiplier * monthMultiplier;
     Logger.log("New %s sub for %s.   Total: %d", tierString, user, this._subNumber);
+    if (monthMultiplier !== 1) {
+      Logger.log("  -> Sub was gifted for %d months!", monthMultiplier);
+    }
     this.emitNumber(this._subNumber);
   }
 }

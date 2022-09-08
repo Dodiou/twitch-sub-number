@@ -1,0 +1,31 @@
+{
+    "badge-info": {
+        "subscriber": "23"
+    },
+    "badges": {
+        "subscriber": "12"
+    },
+    "color": "#008B51",
+    "display-name": "EatingThoseBeans",
+    "emotes": null,
+    "flags": null,
+    "id": "4b11b168-8090-444c-a755-6acd100c684d",
+    "login": "eatingthosebeans",
+    "mod": false,
+    "msg-id": "submysterygift",
+    "msg-param-gift-theme": "biblethump",
+    "msg-param-mass-gift-count": "5",
+    "msg-param-origin-id": "1d d8 b8 8c b4 96 71 47 21 c0 5d cb 49 70 38 ee 45 23 eb f5",
+    "msg-param-sender-count": "142",
+    "msg-param-sub-plan": "1000",
+    "room-id": "31736255",
+    "subscriber": true,
+    "system-msg": "EatingThoseBeans is gifting 5 Tier 1 Subs to DumbDog's community! They've gifted a total of 142 in the channel!",
+    "tmi-sent-ts": "1662577185546",
+    "user-id": "31727387",
+    "user-type": null,
+    "emotes-raw": null,
+    "badge-info-raw": "subscriber/23",
+    "badges-raw": "subscriber/12",
+    "message-type": "submysterygift"
+}

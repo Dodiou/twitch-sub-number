@@ -27,6 +27,16 @@ class MainLogger implements BaseLogger {
 
     this.browserWindow.webContents.send("console-log", "log", ...args);
   }
+
+  public warn(...args: any[]) {
+    if (!this.browserWindow) {
+      console.warn("No window connected to logging. Logging to console.");
+      console.warn(...args);
+      return;
+    }
+
+    this.browserWindow.webContents.send("console-log", "warn", ...args);
+  }
 }
 
 export const Logger = new MainLogger()

@@ -15,6 +15,10 @@ class UiLogger implements BaseLogger {
   public error(...args: any[]): void {
     console.error(...args);
   }
+  
+  public warn(...args: any[]): void {
+    console.error(...args);
+  }
 }
 
 export const Logger = new UiLogger();

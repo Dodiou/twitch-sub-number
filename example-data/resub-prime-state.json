@@ -1,0 +1,34 @@
+{
+    "badge-info": {
+        "subscriber": "3"
+    },
+    "badges": {
+        "subscriber": "3"
+    },
+    "color": "#FF00C3",
+    "display-name": "gabiTHEvegan",
+    "emotes": null,
+    "flags": null,
+    "id": "b895babd-b017-4b18-a2c6-b262f62c7f5c",
+    "login": "gabithevegan",
+    "mod": false,
+    "msg-id": "resub",
+    "msg-param-cumulative-months": "3",
+    "msg-param-months": false,
+    "msg-param-multimonth-duration": false,
+    "msg-param-multimonth-tenure": false,
+    "msg-param-should-share-streak": false,
+    "msg-param-sub-plan-name": "Channel Subscription (last_grey_wolf)",
+    "msg-param-sub-plan": "Prime",
+    "msg-param-was-gifted": "false",
+    "room-id": "31736255",
+    "subscriber": true,
+    "system-msg": "gabiTHEvegan subscribed with Prime. They've subscribed for 3 months!",
+    "tmi-sent-ts": "1662579930138",
+    "user-id": "241141608",
+    "user-type": null,
+    "emotes-raw": null,
+    "badge-info-raw": "subscriber/3",
+    "badges-raw": "subscriber/3",
+    "message-type": "resub"
+}
