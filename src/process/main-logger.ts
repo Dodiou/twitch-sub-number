@@ -30,7 +30,7 @@ class MainLogger implements BaseLogger {
 
   public warn(...args: any[]) {
     if (!this.browserWindow) {
-      console.warn("No window connected to logging. Logging to console.");
+      console.log("No window connected to logging. Logging to console.");
       console.warn(...args);
       return;
     }

@@ -1,26 +1,21 @@
 import { Client, CommonSubUserstate, SubUserstate } from "tmi.js";
 
 import { Logger } from "./ui-logger";
+import { SingleListenerEventEmitter } from "./event-emitter";
 
 export interface SubCounterOpts {
   channel: string;
   subNumber?: number;
 }
 
-export type HandlerFunc = (this: undefined, subNumber: number) => void;
 export type OffChangeFunc = () => void;
 
-interface HandlerMap {
-  [key: string]: HandlerFunc;
-}
-
-const logMysteryGifts = (user: string, numOfSubs: number) => Logger.log("%s gifted %d subs. Total will be updated per each sub event.", user, numOfSubs);
+const logMysteryGifts = (user: string, numOfSubs: number) => Logger.log(`${user} gifted ${numOfSubs} subs. Total will be updated per each sub event.`);
 
 const MAX_QUEUE_LENGTH = 5;
 
-export class SubCounter {
+export class SubCounter extends SingleListenerEventEmitter<number> {
   private readonly client: Client;
-  private readonly handlers: HandlerMap = {};
 
   private nextHandlerId = 0;
   private connected = false;
@@ -30,6 +25,7 @@ export class SubCounter {
   private primeSubQueue: string[] = [];
 
   constructor({ channel, subNumber = 0 }: SubCounterOpts = { channel: "DumbDog" }) {
+    super();
     this._subNumber = subNumber;
     this._channel = channel;
 
@@ -41,7 +37,7 @@ export class SubCounter {
       }
     });
 
-    this.client.connect().catch(Logger.error);
+    this.client.connect().catch((err) => Logger.error("Error connecting to Twitch chat server.", err));
 
     // Optionally count these events:
     //   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
@@ -63,14 +59,14 @@ export class SubCounter {
      // TODO fix tmi.js types for this
     this.client.on("sub" as any, (_channel, user: string, _months, _message, state: SubUserstate) => this.addStateToNumber(state, user));
 
-    this.client.on("part", (channel, user, self) => self && Logger.log("User %s leaving channel %s.", user, channel));
-    this.client.on("join", (channel, user, self) => self && Logger.log("User %s joining channel %s.", user, channel));
+    this.client.on("part", (channel, user, self) => self && Logger.log(`User ${user} leaving channel ${channel}.`));
+    this.client.on("join", (channel, user, self) => self && Logger.log(`User ${user} joining channel ${channel}.`, { test: "test" }));
     this.client.on("connected", () => this.connected = true);
     this.client.on("disconnected", () => this.connected = false);
   }
 
   public disconnect(): void {
-    this.client.disconnect().catch(Logger.error);
+    this.client.disconnect().catch((err) => Logger.error("Error disconnecting from Twitch chat server.", err));
   }
 
   public setChannel(channel: string | undefined): void {
@@ -82,13 +78,13 @@ export class SubCounter {
     }
 
     if (prevChannel) {
-      this.client.part(prevChannel).catch(Logger.error);
+      this.client.part(prevChannel).catch((err) => Logger.error("Error leaving previous chat channel.", err));
     }
 
     if (this._channel) {
       this.client.join(this._channel).catch(
         (err) => {
-          Logger.error(err);
+          Logger.error("Error joining new chat channel.", err);
           this._channel = undefined;
         }
       );
@@ -109,7 +105,7 @@ export class SubCounter {
       return;
     }
 
-    const logMessage = countUpgrades ? "Counting sub upgrades." : "No longer counting sub upgrades."
+    const logMessage = countUpgrades ? "Now counting sub upgrades." : "No longer counting sub upgrades."
     this._countUpgrades = countUpgrades;
     Logger.log(logMessage);
   }
@@ -118,32 +114,13 @@ export class SubCounter {
     return this._countUpgrades;
   }
 
-  public onChange(handler: HandlerFunc): OffChangeFunc {
-    const handlerId = "" + this.nextHandlerId;
-    this.nextHandlerId++;
-
-    const removeHandler: OffChangeFunc = () => {
-      delete this.handlers[handlerId];
-    };
-
-    this.handlers[handlerId] = handler;
-
-    return removeHandler;
-  }
-
   private onSubUpgrade(state: CommonSubUserstate | undefined, type: "Prime" | "Gift", user: string): void {
     if (this._countUpgrades) {
       this.addStateToNumber(state, user);
     }
     else {
-      Logger.log("%s sub upgrade for %s.   Not updating total.", type, user);
+      Logger.log(`${type} sub upgrade for ${user}. Not updating total.`);
     }
-  }
-
-  private emitNumber(value: number): void {
-    Object.values<HandlerFunc>(this.handlers).forEach(
-      (handler) => handler.call(undefined, value)
-    )
   }
 
   /**
@@ -153,7 +130,7 @@ export class SubCounter {
    */
   private getPrimeMultiplierFor(user: string): number {
     if (this.primeSubQueue.includes(user)) {
-      Logger.log("Duplicate prime sub for %s detected.", user);
+      Logger.log(`Duplicate prime sub for ${user} detected.`);
       return 0;
     }
 
@@ -193,10 +170,10 @@ export class SubCounter {
     }
 
     this._subNumber += tierMultiplier * monthMultiplier;
-    Logger.log("New %s sub for %s.   Total: %d", tierString, user, this._subNumber);
+    Logger.log(`New ${tierString} sub for ${user}. Total: ${this._subNumber}`);
     if (monthMultiplier !== 1) {
-      Logger.log("  -> Sub was gifted for %d months!", monthMultiplier);
+      Logger.log(`  -> Sub was gifted for ${monthMultiplier} months!`);
     }
-    this.emitNumber(this._subNumber);
+    this.emitChange(this._subNumber);
   }
 }

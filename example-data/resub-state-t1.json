@@ -1,0 +1,35 @@
+{
+    "badge-info": {
+        "subscriber": "16"
+    },
+    "badges": {
+        "subscriber": "12",
+        "glhf-pledge": "1"
+    },
+    "color": "#22AE47",
+    "display-name": "dlorieann",
+    "emotes": null,
+    "flags": null,
+    "id": "48953f62-ed6e-47b7-80dd-8b5620677c8b",
+    "login": "dlorieann",
+    "mod": false,
+    "msg-id": "resub",
+    "msg-param-cumulative-months": "16",
+    "msg-param-months": false,
+    "msg-param-multimonth-duration": false,
+    "msg-param-multimonth-tenure": false,
+    "msg-param-should-share-streak": false,
+    "msg-param-sub-plan-name": "Channel Subscription (last_grey_wolf)",
+    "msg-param-sub-plan": "1000",
+    "msg-param-was-gifted": "false",
+    "room-id": "31736255",
+    "subscriber": true,
+    "system-msg": "dlorieann subscribed at Tier 1. They've subscribed for 16 months!",
+    "tmi-sent-ts": "1662666824318",
+    "user-id": "413194326",
+    "user-type": null,
+    "emotes-raw": null,
+    "badge-info-raw": "subscriber/16",
+    "badges-raw": "subscriber/12,glhf-pledge/1",
+    "message-type": "resub"
+}

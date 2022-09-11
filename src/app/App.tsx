@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ElectronTSN, SelectFileEvent } from "../types/preload";
 import "./App.css";
 
+import { Logger } from "./services/ui-logger";
 import { SubCounter } from "./services/sub-counter";
 import SingleValueForm from "./components/SingleValueForm/SingleValueForm";
 import Number from "./components/Number/Number";
@@ -21,19 +22,12 @@ const App = () => {
   const [subNumber, setSubNumber] = useState<number>(0);
 
   useEffect(() => {
-    const offHandler = subCounter.onChange((newNumber) => {
+    subCounter.onChange((newNumber) => {
       setSubNumber(newNumber);
-      electronTSN.writeToFile("" + newNumber).catch(console.error);
+      electronTSN.writeToFile("" + newNumber).catch((err) => Logger.error("Error writing sub number to file.", err));
     });
-    return () => {
-      offHandler();
-      subCounter.disconnect();
-    };
+    return () => subCounter.disconnect();
   }, []);
-
-  // No useEffect for subNumber, since subCounter will emit it when it is changed through there.
-  useEffect(() => subCounter.setChannel(channel), [channel]);
-  useEffect(() => subCounter.setCountUpgrades(countUpgrades), [countUpgrades]);
 
   const fileChangeHandler = useCallback((event: SelectFileEvent) => {
     setFilepath(event.filepath);
@@ -52,8 +46,7 @@ const App = () => {
 
     subCounter.setNumber(newNumber);
     setSubNumber(newNumber);
-    electronTSN.writeToFile("" + newNumber).catch(console.error);
-    return true;
+    electronTSN.writeToFile("" + newNumber).catch((err) => Logger.error("Error writing sub number to file.", err));
   };
 
   const channelChangeHandler = (newChannel: string) => {
@@ -61,7 +54,13 @@ const App = () => {
       return false;
     }
 
+    subCounter.setChannel(newChannel);
     setChannel(newChannel);
+  };
+
+  const countUpgradesChangeHandler = (newValue: boolean) => {
+    subCounter.setCountUpgrades(newValue);
+    setCountUpgrades(newValue);
   };
 
   return (
@@ -69,7 +68,7 @@ const App = () => {
       <div className="App__controls">
         <Settings
           countUpgrades={countUpgrades}
-          countUpgradesChange={setCountUpgrades}
+          countUpgradesChange={countUpgradesChangeHandler}
           filepath={filepath}
           fileChange={fileChangeHandler}
           loadNumber={loadNumber}

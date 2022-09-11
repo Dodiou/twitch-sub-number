@@ -11,11 +11,11 @@ const THROTTLE_OPTIONS = { leading: false, trailing: true };
 
 const _writeToFile = (filename: string, contents: string) => {
   try {
-    Logger.log("Writing to file:", contents);
+    Logger.log(`Writing to file: ${contents}`);
     fs.writeFileSync(filename, contents);
   }
   catch (err) {
-    Logger.error(err);
+    Logger.error("Error writing sub number to file.", err);
   }
 };
 
@@ -46,7 +46,7 @@ export const selectFile = (browerWindow: BrowserWindow): Promise<string> => {
       return filepath;
     })
     .catch((err) => {
-      Logger.error(err);
+      Logger.error("Error selecting file.", err);
       return "";
     });
 }
@@ -71,8 +71,8 @@ export const readNumFromFile = (filename: string): number => {
     // convert NaN to 0.
     return parseInt(numFromFile) || 0;
   }
-  catch(err) {
-    Logger.error(err);
+  catch(err: unknown) {
+    Logger.error("Error reading sub number from file.", err);
     return 0;
   }
 };

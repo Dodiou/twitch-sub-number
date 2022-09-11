@@ -33,7 +33,7 @@ const FilePicker = (props: FilePickerProps) => {
       }
     }
     catch(err) {
-      Logger.error(err);
+      Logger.error("Error selecting file.", err);
     }
   };
 

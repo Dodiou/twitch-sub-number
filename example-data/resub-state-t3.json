@@ -1,0 +1,35 @@
+{
+    "badge-info": {
+        "subscriber": "11"
+    },
+    "badges": {
+        "subscriber": "3000",
+        "premium": "1"
+    },
+    "color": "#0000FF",
+    "display-name": "jjapanda",
+    "emotes": null,
+    "flags": null,
+    "id": "ba6b54fe-3e2d-4eae-9725-664342b54af5",
+    "login": "jjapanda",
+    "mod": false,
+    "msg-id": "resub",
+    "msg-param-cumulative-months": "11",
+    "msg-param-months": false,
+    "msg-param-multimonth-duration": false,
+    "msg-param-multimonth-tenure": false,
+    "msg-param-should-share-streak": false,
+    "msg-param-sub-plan-name": "why",
+    "msg-param-sub-plan": "3000",
+    "msg-param-was-gifted": "false",
+    "room-id": "46728961",
+    "subscriber": true,
+    "system-msg": "jjapanda subscribed at Tier 3. They've subscribed for 11 months!",
+    "tmi-sent-ts": "1662611854223",
+    "user-id": "208666880",
+    "user-type": null,
+    "emotes-raw": null,
+    "badge-info-raw": "subscriber/11",
+    "badges-raw": "subscriber/3000,premium/1",
+    "message-type": "resub"
+}
