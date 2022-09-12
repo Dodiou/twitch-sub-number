@@ -1,6 +1,7 @@
 .App {
   height: 100%;
   display: flex;
+
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
@@ -12,7 +13,9 @@
 }
 
 .App__controls {
+  margin: 0.5rem 0.5rem 0 0.5rem;
   display: flex;
+
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;

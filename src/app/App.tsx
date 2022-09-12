@@ -4,8 +4,10 @@ import "./App.css";
 
 import { Logger } from "./services/ui-logger";
 import { SubCounter } from "./services/sub-counter";
-import SingleValueForm from "./components/SingleValueForm/SingleValueForm";
+import Console from "./components/Console/Console";
+import ExpandPanel from "./components/ExpandPanel/ExpandPanel";
 import Number from "./components/Number/Number";
+import SingleValueForm from "./components/SingleValueForm/SingleValueForm";
 import Settings from "./components/Settings/Settings";
 
 declare const electronTSN: ElectronTSN;
@@ -20,6 +22,7 @@ const App = () => {
 
   const [channel, setChannel] = useState<string>(INITIAL_CHANNEL);
   const [subNumber, setSubNumber] = useState<number>(0);
+  const [consoleExpanded, setConsoleExpanded] = useState<boolean>(true);
 
   useEffect(() => {
     subCounter.onChange((newNumber) => {
@@ -91,7 +94,16 @@ const App = () => {
           valueChange={numberFormHandler}
         />
       </div>
-      <Number value={subNumber} />
+      <Number className="flex-remainder" value={subNumber} />
+      
+      <ExpandPanel
+        expanded={consoleExpanded}
+        expandedChange={setConsoleExpanded}
+        expandedHeight="20rem"
+        label="Console"
+      >
+        <Console />
+      </ExpandPanel>
     </div>
   )
 };

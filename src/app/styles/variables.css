@@ -57,11 +57,11 @@
   --input-disabled-fg: rgb(69, 75, 80);
 
   --warning-bd: rgb(102, 85, 0);
-  --warning-bd: rgb(51, 43, 0);
+  --warning-bg: rgb(51, 43, 0);
   --warning-fg: rgb(245, 189, 0);
 
   --error-bd: rgb(92, 0, 0);
-  --error-bd: rgb(41, 0, 0);
+  --error-bg: rgb(41, 0, 0);
   --error-fg: rgb(237, 117, 117);
 
   --info-bd: rgb(59, 77, 96);

@@ -6,9 +6,9 @@ export interface ConsoleMessageProps {
 }
 
 const ConsoleMessage = (props: ConsoleMessageProps) => {
-  return <div className={"ConsoleMessage__" + props.log.type}>
-    <span>{ props.log.timestamp }</span>
-    <span>{ props.log.message }</span>
+  return <div className={"ConsoleMessage ConsoleMessage__" + props.log.type}>
+    <span className="ConsoleMessage__timestamp">{ props.log.timestamp }</span>
+    <span className="ConsoleMessage__message">{ props.log.message }</span>
   </div>;
 };
 

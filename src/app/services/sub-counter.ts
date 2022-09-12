@@ -10,7 +10,7 @@ export interface SubCounterOpts {
 
 export type OffChangeFunc = () => void;
 
-const logMysteryGifts = (user: string, numOfSubs: number) => Logger.log(`${user} gifted ${numOfSubs} subs. Total will be updated per each sub event.`);
+const logMysteryGifts = (user: string, numOfSubs: number) => Logger.log(`"${user}" gifted ${numOfSubs} subs. Total will be updated per each sub event.`);
 
 const MAX_QUEUE_LENGTH = 5;
 
@@ -37,7 +37,7 @@ export class SubCounter extends SingleListenerEventEmitter<number> {
       }
     });
 
-    this.client.connect().catch((err) => Logger.error("Error connecting to Twitch chat server.", err));
+    this.client.connect().catch((err) => Logger.error(`Error connecting to Twitch chat server. Auto-reconnecting. ${err}`));
 
     // Optionally count these events:
     //   - anongiftpaidupgrade, giftpaidupgrade, primepaidupgrade;   these do not increase actual sub count immediately
@@ -59,14 +59,14 @@ export class SubCounter extends SingleListenerEventEmitter<number> {
      // TODO fix tmi.js types for this
     this.client.on("sub" as any, (_channel, user: string, _months, _message, state: SubUserstate) => this.addStateToNumber(state, user));
 
-    this.client.on("part", (channel, user, self) => self && Logger.log(`User ${user} leaving channel ${channel}.`));
-    this.client.on("join", (channel, user, self) => self && Logger.log(`User ${user} joining channel ${channel}.`, { test: "test" }));
+    this.client.on("part", (channel, user, self) => self && Logger.log(`User "${user}" leaving channel "${channel}".`));
+    this.client.on("join", (channel, user, self) => self && Logger.log(`User "${user}" joining channel "${channel}".`));
     this.client.on("connected", () => this.connected = true);
     this.client.on("disconnected", () => this.connected = false);
   }
 
   public disconnect(): void {
-    this.client.disconnect().catch((err) => Logger.error("Error disconnecting from Twitch chat server.", err));
+    this.client.disconnect().catch((err) => Logger.error(`Error disconnecting from Twitch chat server. ${err}`));
   }
 
   public setChannel(channel: string | undefined): void {
@@ -78,13 +78,16 @@ export class SubCounter extends SingleListenerEventEmitter<number> {
     }
 
     if (prevChannel) {
-      this.client.part(prevChannel).catch((err) => Logger.error("Error leaving previous chat channel.", err));
+      this.client.part(prevChannel).catch(
+        // TODO figure out how to leave a channel if there is an error.
+        (err) => Logger.error(`Error leaving chat channel "${prevChannel}". You should probably restart the program.   ${err}`)
+      );
     }
 
     if (this._channel) {
       this.client.join(this._channel).catch(
         (err) => {
-          Logger.error("Error joining new chat channel.", err);
+          Logger.error(`Error joining chat channel "${this._channel}". ${err}`);
           this._channel = undefined;
         }
       );
@@ -119,7 +122,7 @@ export class SubCounter extends SingleListenerEventEmitter<number> {
       this.addStateToNumber(state, user);
     }
     else {
-      Logger.log(`${type} sub upgrade for ${user}. Not updating total.`);
+      Logger.log(`${type} sub upgrade for "${user}". Not updating total.`);
     }
   }
 
@@ -130,7 +133,7 @@ export class SubCounter extends SingleListenerEventEmitter<number> {
    */
   private getPrimeMultiplierFor(user: string): number {
     if (this.primeSubQueue.includes(user)) {
-      Logger.log(`Duplicate prime sub for ${user} detected.`);
+      Logger.log(`Duplicate prime sub for "${user}" detected.`);
       return 0;
     }
 
@@ -170,7 +173,7 @@ export class SubCounter extends SingleListenerEventEmitter<number> {
     }
 
     this._subNumber += tierMultiplier * monthMultiplier;
-    Logger.log(`New ${tierString} sub for ${user}. Total: ${this._subNumber}`);
+    Logger.log(`New ${tierString} sub for "${user}". Total: ${this._subNumber}`);
     if (monthMultiplier !== 1) {
       Logger.log(`  -> Sub was gifted for ${monthMultiplier} months!`);
     }

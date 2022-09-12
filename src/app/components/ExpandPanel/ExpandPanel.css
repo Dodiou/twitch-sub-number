@@ -1,0 +1,19 @@
+.ExpandPanel {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.ExpandPanel__toolbar {
+  padding-inline-start: 0.5rem;
+  flex: 0 0 auto;
+
+  font-size: var(--font-size-large);
+  background-color: var(--color-medium-bg);
+  border: 1px solid var(--color-medium-bd);
+  color: var(--color-medium-fg);
+}
+
+.ExpandPanel__container {
+  flex: 1 1 auto;
+}

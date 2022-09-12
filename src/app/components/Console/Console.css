@@ -1,0 +1,51 @@
+.Console {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: auto;
+  gap: 0;
+}
+
+.Console__no-data {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.ConsoleMessage {
+  width: 100%;
+  flex: 0 0 auto;
+
+  font-size: var(--font-size-small);
+  padding: 0.25rem;
+
+  /* default styles are info. */
+  border: 1px solid var(--info-bd);
+  background-color: var(--info-bg);
+  color: var(--info-fg);
+}
+
+.ConsoleMessage__warn {
+  border: 1px solid var(--warning-bd);
+  background-color: var(--warning-bg);
+  color: var(--warning-fg);
+}
+
+.ConsoleMessage__error {
+  border: 1px solid var(--error-bd);
+  background-color: var(--error-bg);
+  color: var(--error-fg);
+}
+
+.ConsoleMessage__timestamp {
+  display: inline-block;
+  width: 7.25rem;
+}
+
+.ConsoleMessage__message {
+  display: inline-block;
+  width: calc(100% - 7.25rem);
+}

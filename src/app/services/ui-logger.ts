@@ -65,7 +65,15 @@ class UiLogger extends SingleListenerEventEmitter<Log[]> implements BaseLogger {
     const log: Log = {
       id: this.nextLogId++,
       message,
-      timestamp: new Date().toLocaleTimeString(), // can also use toLocaleString if date is needed.
+      timestamp: new Date().toLocaleTimeString(
+        undefined,
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          fractionalSecondDigits: 3,
+        } as any // for some reason, fractionalSecondDigits is not on the type
+      ), // can also use toLocaleString if date is needed.
       type,
     };
 
