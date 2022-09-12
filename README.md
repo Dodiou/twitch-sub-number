@@ -5,7 +5,9 @@ Sub number to file for Twitch
 When the program loads, it will auto-connect to the Twtich chat channel
 for `"DumbDog"`.
 
-Working on executable release at the moment.
+Release for 64-bit Windows is available. Click "Releases" on the right.
+Current release is at the top. Scroll to "Assets", expand and download
+the `.zip` file (not the source code).
 
 # How to build:
 Install [Node.js](https://nodejs.org/en/), v.16.15.0 and up should work.
