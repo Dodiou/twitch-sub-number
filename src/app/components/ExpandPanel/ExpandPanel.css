@@ -1,5 +1,6 @@
 .ExpandPanel {
   display: flex;
+  overflow: auto;
   flex-direction: column;
   flex-wrap: nowrap;
 }

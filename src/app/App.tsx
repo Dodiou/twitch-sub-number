@@ -94,12 +94,13 @@ const App = () => {
           valueChange={numberFormHandler}
         />
       </div>
-      <Number className="flex-remainder" value={subNumber} />
+      <Number value={subNumber} />
       
       <ExpandPanel
+        className="App__console-container"
         expanded={consoleExpanded}
         expandedChange={setConsoleExpanded}
-        expandedHeight="20rem"
+        expandedHeight="25rem"
         label="Console"
       >
         <Console />
